@@ -1,14 +1,13 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Verify } from 'src/libs/src/verify.model';
-import { Trie } from './libs/src/Trie';
+import Trie from './libs/src/Trie';
 
 @Injectable()
 export class AppService {
   getHello(data: Verify) {
     try {
       if(data.match){
-        const x = new Trie();
-        x.insertItem(data.phoneNumber)
+        Trie.insertItem(data.phoneNumber)
         return {
           data: {phoneNumber: data.phoneNumber,telco:data.telco},
           message: 'Phone number verified successfully'
@@ -24,9 +23,7 @@ export class AppService {
     }
   }
   autocomplete(data:string){
- 
-     const x = new Trie();
-     console.log(x.autocomplete(data))
+     return Trie.autocomplete(data);
 
   }
 }

@@ -1,4 +1,4 @@
-export class Trie {
+class Trie {
     next: {};
     leaf: boolean;
    
@@ -10,17 +10,18 @@ export class Trie {
     insertItem(item) {
         let i = 0;
         let current = this;
-    
+        let node = new Trie();
         while (i < item.length) {
           let k = item[i];
     
           if (!current.next[k]) {
-            let node = new Trie();
+            
             current.next[k] = node;
           }
           current = current.next[k];
     
           if (i === item.length - 1) {
+            current.next[k] = node;
             current.leaf = true;
           } else {
             current.leaf = false;
@@ -31,14 +32,17 @@ export class Trie {
     }
   
     traversal(item) {
-      if (this.leaf) {
-        console.log(item);
+        if (this.leaf) {
+          return [item];
+        }
+        let values = [];
+        for (let i in this.next) {
+          let s = item + i;
+          values = [...values, ...this.next[i].traversal(s)];
+        }
+    
+        return values;
       }
-      for (let i in this.next) {
-        let s = item + i;
-        this.next[i].traversal(s)
-      }
-    }
   
     autocomplete(item:string) {
         let i = 0;
@@ -52,7 +56,7 @@ export class Trie {
           if (current.next[k]) {
             current = current.next[k];
           } else {
-            return null;
+            return '';
           }
           i += 1;
         }
@@ -60,6 +64,7 @@ export class Trie {
         return current.traversal(s);
     }
   }
+  export default new Trie();
 
 // export default class TrieNode {
 //     //subtract this value to get indices starting at 0
