@@ -1,4 +1,4 @@
-import { Controller, Get, Request, Response } from '@nestjs/common';
+import { Controller, Get, Param, Query, Request, Response } from '@nestjs/common';
 import { Verify } from 'src/libs/src/verify.model';
 import { AppService } from './app.service';
 
@@ -9,11 +9,10 @@ export class AppController {
   @Get('/which-telco')
   getHello(@Response() res) {
     const data =res.result as Verify
-    console.log(data)
     res.json( this.appService.getHello(data));
   }
   @Get('/auto-complete')
-  autoComplete(phoneNumber: string) {
-    //res.json( this.appService.getHello(data));
+  autoComplete(@Query('phoneNumber') phoneNumber: string) {
+    return this.appService.autocomplete(phoneNumber);
   }
 }

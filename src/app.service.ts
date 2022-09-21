@@ -1,13 +1,13 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Verify } from 'src/libs/src/verify.model';
-import { TrieNode } from './libs/src/Trie';
+import { Trie } from './libs/src/Trie';
 
 @Injectable()
 export class AppService {
   getHello(data: Verify) {
     try {
       if(data.match){
-        const x = new TrieNode();
+        const x = new Trie();
         x.insertItem(data.phoneNumber)
         return {
           data: {phoneNumber: data.phoneNumber,telco:data.telco},
@@ -16,7 +16,7 @@ export class AppService {
       }else{
         return{
           data:{phoneNumber: data.phoneNumber},
-          message: 'Phone Number doesn\'t match any telco'
+          message: "Phone·Number·doesn't·match·any·telco"
         }
       }
     } catch (error) {
@@ -24,7 +24,9 @@ export class AppService {
     }
   }
   autocomplete(data:string){
-    const x = new TrieNode();
-    x.autocomplete(data)
+ 
+     const x = new Trie();
+     console.log(x.autocomplete(data))
+
   }
 }
